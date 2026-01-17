@@ -20,4 +20,4 @@ Simple React dApp for OPHIR holders.
 ## Deploy
 Built with Create React App → `npm run build` → deploy build/ folder to Vercel/Netlify.
 
-Use at own risk — test small amounts. Community project, no affiliation with original team.
+Use at own risk — test small amounts. Community project, no affiliation with original team...
