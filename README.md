@@ -1,6 +1,8 @@
-# Ophir Crypto Community Frontend Fix
+# OphirFront – Community Frontend Fix
 
-Simple React dApp for OPHIR holders on PulseChain (since original site/WalletConnect is broken).
+Community-maintained frontend for OPHIR staking on PulseChain (original site/WalletConnect is broken).
+
+Simple React dApp for OPHIR holders.
 
 ## Features
 - Connect wallet (MetaMask, WalletConnect for mobile like Internet Money/PulseWallet)
