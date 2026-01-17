@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { createAppKit } from '@reown/appkit';
 import { WagmiProvider, createConfig, http } from 'wagmi';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -22,12 +22,12 @@ const config = createConfig({
 
 // Reown AppKit setup
 const queryClient = new QueryClient();
-const projectId = 'e2a947ed8aeaa32d8eca35cb1c7a5c4c'; // Your ID
+const projectId = 'e2a947ed8aeaa32d8eca35cb1c7a5c4c';
 
 const metadata = {
   name: 'Ophir Community Frontend',
   description: 'Simple access to OPHIR staking',
-  url: 'http://localhost:3000', // Change to deploy URL later
+  url: 'http://localhost:3000',
   icons: ['https://avatars.githubusercontent.com/u/37784886']
 };
 
@@ -70,22 +70,7 @@ function App() {
   const [stakeAmount, setStakeAmount] = useState('');
   const [stakeDays, setStakeDays] = useState('');
 
-  useEffect(() => {
-  const unsubscribe = modal.subscribeState((state) => {
-    if (state.status === 'Success') {
-      checkConnection();
-    } else if (state.status === 'Disconnected') {
-      setAccount(null);
-      setProvider(null);
-      setBalance('0');
-      setStakes([]);
-    }
-  });
-  checkConnection();
-  return () => unsubscribe();
-}, [checkConnection]);  // ← add this
-
-  const checkConnection = async () => {
+  const checkConnection = useCallback(async () => {
     const walletProvider = modal.getWalletProvider();
     if (walletProvider) {
       const ethersProvider = new ethers.BrowserProvider(walletProvider);
@@ -96,7 +81,22 @@ function App() {
       fetchBalance(ethersProvider, addr);
       fetchStakes(ethersProvider, addr);
     }
-  };
+  }, []);  // empty deps - no external state inside
+
+  useEffect(() => {
+    const unsubscribe = modal.subscribeState((state) => {
+      if (state.status === 'Success') {
+        checkConnection();
+      } else if (state.status === 'Disconnected') {
+        setAccount(null);
+        setProvider(null);
+        setBalance('0');
+        setStakes([]);
+      }
+    });
+    checkConnection();  // initial check
+    return () => unsubscribe();
+  }, [checkConnection]);  // now safe
 
   const openModal = async () => {
     await modal.open();
