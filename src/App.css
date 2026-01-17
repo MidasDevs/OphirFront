@@ -1,38 +1,282 @@
-.App {
+/* src/App.css */
+
+/* Dark cosmic background */
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: linear-gradient(135deg, #0a001f 0%, #1a0033 100%);
+  color: #ffffff;
+  min-height: 100vh;
+}
+
+/* Container */
+.app-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Title */
+.app-title {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  color: #ffd700; /* gold */
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Subtitle / disclaimer */
+.app-subtitle {
+  font-size: 1.3rem;
+  color: #e0e0ff;
+  margin-bottom: 2.5rem;
+  opacity: 0.9;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+/* Connect / Disconnect button */
+.connect-btn,
+.disconnect-btn {
+  border: none;
+  border-radius: 50px;
+  padding: 16px 40px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.connect-btn {
+  background: linear-gradient(90deg, #ff00aa, #9d00ff);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.disconnect-btn {
+  background: linear-gradient(90deg, #ff3366, #cc0066);
+  color: white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.connect-btn:hover,
+.disconnect-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 10px 30px rgba(157, 0, 255, 0.6);
+}
+
+/* Connected status */
+.connected-info {
+  font-size: 1.4rem;
+  margin: 2rem 0;
+  color: #ffd700;
+}
+
+/* Balance card */
+.balance-card {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 2rem 0;
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  backdrop-filter: blur(8px);
+}
+
+.balance-title {
+  font-size: 1.8rem;
+  color: #ff99cc;
+  margin-bottom: 1rem;
+}
+
+.balance-value {
+  font-size: 3rem;
+  color: #ffd700;
+}
+
+/* Stake form */
+.stake-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.stake-input {
+  padding: 14px 20px;
+  border-radius: 12px;
+  border: 1px solid #9d00ff;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 1.1rem;
+  width: 220px;
+}
+
+.stake-btn {
+  background: linear-gradient(90deg, #00d1b2, #009688);
+  border: none;
+  border-radius: 50px;
+  padding: 14px 32px;
+  font-size: 1.1rem;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 209, 178, 0.4);
+  transition: all 0.3s;
+}
+
+.stake-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(0, 209, 178, 0.6);
+}
+
+/* Stakes list */
+.stakes-list {
+  list-style: none;
+  padding: 0;
+}
+
+.stake-item {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid rgba(255, 215, 0, 0.15);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.1rem;
+}
+
+.stake-info {
+  text-align: left;
+}
+
+.end-stake-btn {
+  background: #ff3366;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 24px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.end-stake-btn:hover {
+  background: #cc0066;
+}
+
+/* Hero section */
+.hero {
+  margin: 4rem 0 6rem;
+}
+
+.hero-title {
+  font-size: 3.8rem;
+  font-weight: 800;
+  color: #ffd700;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.7);
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: #d0c0ff;
+  margin-bottom: 3rem;
+}
+
+/* Connected header */
+.connected-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.connected-text {
+  font-size: 1.6rem;
+  color: #ffd700;
+}
+
+/* Balance section */
+.balance-section {
+  margin: 3rem 0;
+}
+
+.balance-card {
+  background: linear-gradient(135deg, rgba(157,0,255,0.15), rgba(0,209,178,0.15));
+  border-radius: 24px;
+  padding: 3rem 2rem;
+  border: 2px solid rgba(255,215,0,0.3);
+  backdrop-filter: blur(12px);
+}
+
+.balance-card h2 {
+  font-size: 2rem;
+  color: #ffccff;
+  margin-bottom: 1rem;
+}
+
+.balance-value {
+  font-size: 4.5rem;
+  font-weight: bold;
+  color: #ffd700;
+  text-shadow: 0 0 20px rgba(255,215,0,0.8);
+}
+
+/* Stake section */
+.stake-section h2 {
+  font-size: 2.2rem;
+  color: #ff99cc;
+  margin-bottom: 1.5rem;
+}
+
+.stake-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Stakes grid */
+.stakes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.stake-card {
+  background: rgba(255,255,255,0.06);
+  border-radius: 16px;
+  padding: 1.8rem;
+  border: 1px solid rgba(255,215,0,0.2);
+  backdrop-filter: blur(8px);
+}
+
+.stake-details div {
+  margin: 0.6rem 0;
+  font-size: 1.1rem;
+}
+
+.end-btn {
+  background: linear-gradient(90deg, #ff3366, #cc0066);
+  border: none;
+  border-radius: 50px;
+  padding: 12px 28px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.end-btn:hover {
+  background: linear-gradient(90deg, #ff6699, #ff3399);
+  transform: scale(1.05);
+}
+
+/* Footer */
+.footer {
+  margin-top: 6rem;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  color: #aaaaff;
+  font-size: 0.95rem;
 }
