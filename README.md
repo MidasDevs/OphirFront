@@ -17,6 +17,10 @@ Simple React dApp for OPHIR holders.
 1. `npm install`
 2. `npm start` → opens http://localhost:3000
 
+
+## Live Site
+https://ophirfront.vercel.app
+
 ## Deploy
 Built with Create React App → `npm run build` → deploy build/ folder to Vercel/Netlify.
 
