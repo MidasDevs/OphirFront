@@ -71,14 +71,19 @@ function App() {
   const [stakeDays, setStakeDays] = useState('');
 
   useEffect(() => {
-    const unsubscribe = modal.subscribeState((state) => {
-      if (state.status === 'Success') {
-        checkConnection();
-      }
-    });
-    checkConnection();
-    return () => unsubscribe();
-  }, []);
+  const unsubscribe = modal.subscribeState((state) => {
+    if (state.status === 'Success') {
+      checkConnection();
+    } else if (state.status === 'Disconnected') {
+      setAccount(null);
+      setProvider(null);
+      setBalance('0');
+      setStakes([]);
+    }
+  });
+  checkConnection();
+  return () => unsubscribe();
+}, [checkConnection]);  // ← add this
 
   const checkConnection = async () => {
     const walletProvider = modal.getWalletProvider();
