@@ -13,6 +13,7 @@ const pulsechain = {
 };
 
 const projectId = 'e2a947ed8aeaa32d8eca35cb1c7a5c4c';
+const DECIMALS = 18;
 
 const metadata = {
   name: 'Ophir Community Frontend',
@@ -31,13 +32,7 @@ const modal = createAppKit({
 
 const CONTRACT_ADDRESS = '0xc59be55d22cb7967ee95e5be0770e263ee014f78';
 
-const ABI = [
-  {"constant":true,"inputs":[{"name":"_owner","type":"address"}],"name":"balanceOf","outputs":[{"name":"balance","type":"uint256"}],"type":"function"},
-  {"constant":true,"inputs":[],"name":"currentDay","outputs":[{"name":"","type":"uint256"}],"type":"function"},
-  {"constant":false,"inputs":[{"name":"newStakedHearts","type":"uint256"},{"name":"newStakedDays","type":"uint256"}],"name":"stakeStart","outputs":[],"type":"function"},
-  {"constant":false,"inputs":[{"name":"stakeIndex","type":"uint256"},{"name":"stakeIdParam","type":"uint40"}],"name":"stakeEnd","outputs":[],"type":"function"},
-  {"constant":true,"inputs":[{"name":"stakerAddr","type":"address"}],"name":"stakeCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},
-  {"constant":true,"inputs":[{"name":"stakerAddr","type":"address"},{"name":"stakeIndex","type":"uint256"}],"name":"stakeLists","outputs":[{"name":"stakeId","type":"uint40"},{"name":"stakedHearts","type":"uint256"},{"name":"stakeShares","type":"uint256"},{"name":"lockedDay","type":"uint16"},{"name":"stakedDays","type":"uint16"},{"name":"unlockedDay","type":"uint16"},{"name":"isAutoStake","type":"bool"}],"type":"function"},
+const ABI = [{"inputs":[],"type":"constructor"},{"inputs":[{"internalType":"address","name":"","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"Stakes","outputs":[{"internalType":"uint256","name":"stakeId","type":"uint256"},{"internalType":"uint256","name":"stakedPrinciple","type":"uint256"},{"internalType":"uint256","name":"startDay","type":"uint256"},{"internalType":"uint256","name":"scrapeDay","type":"uint256"},{"internalType":"uint256","name":"stakedDays","type":"uint256"},{"internalType":"uint256","name":"scrapedInterest","type":"uint256"},{"internalType":"uint256","name":"possibleStars","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"allocatedSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"stakedPrinciple","type":"uint256"},{"internalType":"uint256","name":"stakedDays","type":"uint256"}],"name":"calculateInterest","outputs":[{"internalType":"uint256","name":"interest","type":"uint256"}],"stateMutability":"pure","type":"function"},{"inputs":[{"internalType":"uint256","name":"tempStartDay","type":"uint256"},{"internalType":"uint256","name":"tempStakedDays","type":"uint256"},{"internalType":"uint256","name":"tempScrapeDay","type":"uint256"}],"name":"calculateStakeDays","outputs":[{"internalType":"uint256[6]","name":"","type":"uint256[6]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"userAddress","type":"address"}],"name":"countStakes","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"currentDay","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"stakeIndex","type":"uint256"},{"internalType":"uint256","name":"myStakeId","type":"uint256"}],"name":"endStake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"endowmentSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"originalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"reportGlobals","outputs":[{"internalType":"uint256","name":"staked_stars","type":"uint256"},{"internalType":"uint256","name":"staked_principle_stars","type":"uint256"},{"internalType":"uint256","name":"total_supply","type":"uint256"},{"internalType":"uint256","name":"allocated_supply","type":"uint256"},{"internalType":"uint256","name":"penalized_stars","type":"uint256"},{"internalType":"uint256","name":"current_day","type":"uint256"},{"internalType":"uint256","name":"latest_stake_id","type":"uint256"},{"internalType":"uint256","name":"staked_count","type":"uint256"},{"internalType":"uint256","name":"endowment_supply","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"stakeIndex","type":"uint256"},{"internalType":"uint256","name":"myStakeId","type":"uint256"}],"name":"scrapeStake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"stakedPrinciple","type":"uint256"},{"internalType":"uint256","name":"stakedDays","type":"uint256"}],"name":"startStake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"sender","type":"address"},{"internalType":"address","name":"recipient","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"anonymous":false,"inputs":[{"indexed":true,"name":"owner","type":"address"},{"indexed":true,"name":"spender","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"stakeAddress","type":"address"},{"indexed":true,"name":"stakeId","type":"uint256"},{"indexed":true,"name":"eventName","type":"uint256"},{"indexed":false,"name":"endStakeDay","type":"uint256"},{"indexed":false,"name":"principle","type":"uint256"},{"indexed":false,"name":"oldPossibleInterest","type":"uint256"},{"indexed":false,"name":"scrapedInterest","type":"uint256"},{"indexed":false,"name":"penalties","type":"uint256"},{"indexed":false,"name":"stakeTotal","type":"uint256"}],"name":"EndStake","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"stakeAddress","type":"address"},{"indexed":true,"name":"stakeId","type":"uint256"},{"indexed":true,"name":"eventName","type":"uint256"},{"indexed":false,"name":"scrapeDay","type":"uint256"},{"indexed":false,"name":"previousScrapedInterest","type":"uint256"},{"indexed":false,"name":"oldPossibleInterest","type":"uint256"},{"indexed":false,"name":"scrapedInterest","type":"uint256"},{"indexed":false,"name":"possibleInterest","type":"uint256"}],"name":"ScrapeStake","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"stakeAddress","type":"address"},{"indexed":true,"name":"stakeId","type":"uint256"},{"indexed":true,"name":"eventName","type":"uint256"},{"indexed":false,"name":"startDay","type":"uint256"},{"indexed":false,"name":"stakedDays","type":"uint256"},{"indexed":false,"name":"principle","type":"uint256"},{"indexed":false,"name":"possibleInterest","type":"uint256"}],"name":"StartStake","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"name":"from","type":"address"},{"indexed":true,"name":"to","type":"address"},{"indexed":false,"name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"type":"receive"},{"type":"fallback"}
 ];
 
 function App() {
@@ -84,7 +79,7 @@ function App() {
     const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, prov);
     try {
       const bal = await contract.balanceOf(addr);
-      setBalance(ethers.formatUnits(bal, 8));
+      setBalance(ethers.formatUnits(bal, 18));
 
       const count = await contract.stakeCount(addr);
       const list = [];
@@ -92,7 +87,7 @@ function App() {
         const stake = await contract.stakeLists(addr, i);
         list.push({
           id: stake.stakeId.toString(),
-          amount: ethers.formatUnits(stake.stakedHearts, 8),
+          amount: ethers.formatUnits(stake.stakedHearts, 18),
           days: stake.stakedDays.toString(),
           lockedDay: stake.lockedDay.toString(),
           unlockedDay: stake.unlockedDay.toString()
@@ -154,6 +149,18 @@ function App() {
     await tx.wait();
     updateConnection();
   };
+  
+  const scrapeStake = async (idx, id) => {
+  if (!account) return;
+  const walletProvider = modal.getWalletProvider();
+  if (!walletProvider) return;
+  const provider = new ethers.BrowserProvider(walletProvider);
+  const signer = await provider.getSigner();
+  const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+  const tx = await contract.scrapeStake(idx, id);
+  await tx.wait();
+  updateConnection();  // refresh data
+};
 
   return (
     <div className="app-container">
@@ -211,6 +218,7 @@ function App() {
                       <div><strong>Unlocked:</strong> Day {stake.unlockedDay}</div>
                     </div>
                     <button className="end-btn" onClick={() => endStake(idx, stake.id)}>End Stake</button>
+					<button className="scrape-btn" onClick={() => scrapeStake(idx, stake.id)}>Scrape Yield (Early + Charity Penalty)</button>
                   </div>
                 ))}
               </div>

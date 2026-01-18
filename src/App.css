@@ -280,3 +280,11 @@ body {
   color: #aaaaff;
   font-size: 0.95rem;
 }
+
+.scrape-btn {
+  background: linear-gradient(90deg, #00d1b2, #009688);
+  /* rest same as end-btn */
+}
+.scrape-btn:hover {
+  background: linear-gradient(90deg, #00ffcc, #00ccaa);
+}
