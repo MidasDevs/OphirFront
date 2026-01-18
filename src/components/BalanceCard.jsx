@@ -1,3 +1,8 @@
+// src/components/BalanceCard.jsx
+import React from 'react';
+
+const formatNum = (num) => Number(num).toLocaleString('en-US', {maximumFractionDigits: 2});
+
 function BalanceCard({ balance }) {
   return (
     <section className="balance-section">
@@ -8,4 +13,5 @@ function BalanceCard({ balance }) {
     </section>
   );
 }
+
 export default BalanceCard;

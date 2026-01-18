@@ -10,6 +10,7 @@ import StakeForm from './components/StakeForm';
 import StakesList from './components/StakesList';
 import './App.css';
 import { ABI, CONTRACT_ADDRESS, DECIMALS } from './abi/ophirAbi';
+import GlobalsCard from './components/GlobalsCard';
 
 const pulsechain = {
   id: 369,
@@ -70,8 +71,8 @@ function App() {
   const fetchData = async (prov, addr) => {
     const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, prov);
     try {
-      const bal = await contract.balanceOf(addr);
-      setBalance(ethers.formatUnits(bal, DECIMALS));
+      const bal = await contract.balanceOf(addr).catch(() => 0n);
+      setBalance(ethers.formatUnits(bal || 0n, DECIMALS));
 
       const day = await contract.currentDay();
       setCurrentDay(Number(day));
@@ -163,6 +164,7 @@ function App() {
           <BalanceCard balance={balance} />
           <StakeForm onStake={startStake} />
           <StakesList stakes={stakes} currentDay={currentDay} onEnd={endStake} onScrape={scrapeStake} />
+		  <GlobalsCard />
         </>
       )}
       <footer className="footer">

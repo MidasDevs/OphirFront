@@ -288,3 +288,13 @@ body {
 .scrape-btn:hover {
   background: linear-gradient(90deg, #00ffcc, #00ccaa);
 }
+
+.globals-section {
+  margin: 3rem 0;
+  text-align: left;
+  max-width: 600px;
+}
+.globals-section div {
+  margin: 0.8rem 0;
+  font-size: 1.1rem;
+}

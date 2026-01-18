@@ -1,3 +1,6 @@
+// src/components/Hero.jsx
+import React from 'react';
+
 function Hero({ onConnect }) {
   return (
     <section className="hero">
@@ -7,4 +10,5 @@ function Hero({ onConnect }) {
     </section>
   );
 }
+
 export default Hero;
