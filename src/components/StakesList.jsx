@@ -22,7 +22,7 @@ function StakesList({ stakes, currentDay, onEnd, onScrape }) {
               <div><strong>Status:</strong> {currentDay >= s.unlockedDay ? 'Mature (full payout)' : 'Active'}</div>
             </div>
             <button className="end-btn" onClick={() => onEnd(idx, s.id)}>End Stake</button>
-            {currentDay > s.startDay && <button className="scrape-btn" onClick={() => onScrape(idx, s.id)}>Scrape Yield (Early + Charity)</button>}
+            {currentDay > s.startDay && <button className="scrape-btn" onClick={() => onScrape(idx, s.id)}>Scrape Yield</button>}
           </div>
         ))}
       </div>
