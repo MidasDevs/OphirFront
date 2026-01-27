@@ -1,4 +1,4 @@
-// src/App.jsx (full corrected)
+// src/App.jsx (full final)
 import { useEffect, useState, useCallback } from 'react';
 import { createAppKit } from '@reown/appkit';
 import { EthersAdapter } from '@reown/appkit-adapter-ethers';

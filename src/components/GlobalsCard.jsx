@@ -30,7 +30,7 @@ function GlobalsCard() {
       <h2>Network Stats</h2>
       <div><strong>Current Day:</strong> {globals.currentDay.toLocaleString()}</div>
       <div><strong>Total Staked:</strong> {formatNum(globals.totalStaked)} OPHIR</div>
-      <div><strong>Charity Pool:</strong> {formatNum(globals.charity)} OPHIR</div>
+      <div><strong>Penalty Burned Ophir:</strong> {formatNum(globals.charity)} OPHIR</div>
       <div><strong>Endowment Pool:</strong> {formatNum(globals.endowment)} OPHIR</div>
     </section>
   );
