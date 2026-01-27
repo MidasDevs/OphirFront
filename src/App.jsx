@@ -71,30 +71,40 @@ function App() {
   }, [account]);
 
   const fetchData = async (prov, addr) => {
-    const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, prov);
-    try {
-      const bal = await contract.balanceOf(addr).catch(() => 0n);
-      setBalance(ethers.formatUnits(bal || 0n, DECIMALS));
-      const day = await contract.currentDay();
-      setCurrentDay(Number(day));
-      const count = await contract.countStakes(addr);
-      const list = [];
-      for (let i = 0; i < Number(count); i++) {
-        const s = await contract.Stakes(addr, i);
-        list.push({
-          id: s.stakeId.toString(),
-          amount: ethers.formatUnits(s.stakedPrinciple, DECIMALS),
-          days: s.stakedDays.toString(),
-          startDay: Number(s.startDay),
-          unlockedDay: Number(s.startDay) + Number(s.stakedDays),
-          scraped: ethers.formatUnits(s.scrapedInterest, DECIMALS),
-        });
+  const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, prov);
+  try {
+    const bal = await contract.balanceOf(addr).catch(() => 0n);
+    setBalance(ethers.formatUnits(bal || 0n, DECIMALS));
+    const day = await contract.currentDay();
+    setCurrentDay(Number(day));
+    const count = await contract.countStakes(addr);
+    const list = [];
+    for (let i = 0; i < Number(count); i++) {
+      const s = await contract.Stakes(addr, i);
+      // calculate accrued since last scrape
+      const lastScrape = Number(s.scrapeDay);
+      const interestDays = Number(day) - lastScrape;
+      let available = '0';
+      if (interestDays > 0) {
+        const accrued = await contract.calculateInterest(s.stakedPrinciple, interestDays);
+        available = ethers.formatUnits(accrued, DECIMALS);
       }
-      setStakes(list);
-    } catch (e) {
-      console.error(e);
+      list.push({
+        id: s.stakeId.toString(),
+        amount: ethers.formatUnits(s.stakedPrinciple, DECIMALS),
+        days: s.stakedDays.toString(),
+        startDay: Number(s.startDay),
+        unlockedDay: Number(s.startDay) + Number(s.stakedDays),
+        scraped: ethers.formatUnits(s.scrapedInterest, DECIMALS),
+        available,
+        lastScrape,
+      });
     }
-  };
+    setStakes(list);
+  } catch (e) {
+    console.error(e);
+  }
+};
 
   useEffect(() => {
     updateConnection();
@@ -140,16 +150,20 @@ function App() {
   };
 
   const scrapeStake = async (idx, id) => {
-    const walletProvider = modal.getWalletProvider();
-    if (!walletProvider) return;
-    const provider = new ethers.BrowserProvider(walletProvider);
-    const signer = await provider.getSigner();
-    const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+  const walletProvider = modal.getWalletProvider();
+  if (!walletProvider) return;
+  const provider = new ethers.BrowserProvider(walletProvider);
+  const signer = await provider.getSigner();
+  const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
+  try {
     const tx = await contract.scrapeStake(idx, id);
     await tx.wait();
     setLastTx(tx.hash);
     updateConnection();
-  };
+  } catch (e) {
+    alert('No yield available to scrape yet');
+  }
+};
 
   return (
     <div className="app-container">
