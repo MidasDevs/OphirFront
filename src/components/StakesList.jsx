@@ -19,6 +19,7 @@ function StakesList({ stakes, currentDay, onEnd, onScrape }) {
               <div><strong>Start:</strong> Day {s.startDay}</div>
               <div><strong>End:</strong> Day {s.unlockedDay}</div>
               <div><strong>Scraped Yield:</strong> {s.scraped} OPHIR</div>
+			  <div><strong>Last Scraped:</strong> Day {s.lastScraped} ({s.lastScraped === s.startDay ? 'Never' : 'Has scraped'})</div>
               <div><strong>Status:</strong> {currentDay >= s.unlockedDay ? 'Mature (full payout)' : 'Active'}</div>
             </div>
             <button className="end-btn" onClick={() => onEnd(idx, s.id)}>End Stake</button>

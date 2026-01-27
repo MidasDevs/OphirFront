@@ -113,6 +113,7 @@ function App() {
 
   const connect = async () => { await modal.open(); updateConnection(); };
   const disconnect = async () => { await modal.disconnect(); updateConnection(); };
+  await updateConnection();
 
   const startStake = async (amount, days) => {
     if (!amount || !days) return;
