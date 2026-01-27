@@ -1,4 +1,4 @@
-// src/components/StakesList.jsx (lastScraped + 8 decimals)
+// src/components/StakesList.jsx (fixed duplicate button)
 import React from 'react';
 
 const formatNum = (num) => Number(num).toLocaleString('en-US', { maximumFractionDigits: 8 });
@@ -19,17 +19,18 @@ function StakesList({ stakes, currentDay, onEnd, onScrape }) {
               <div><strong>Start:</strong> Day {s.startDay}</div>
               <div><strong>End:</strong> Day {s.unlockedDay}</div>
               <div><strong>Scraped Yield:</strong> {formatNum(s.scraped)} OPHIR</div>
-			  <div><strong>Available to Scrape:</strong> {formatNum(s.available)} OPHIR</div>
-              <div><strong>Last Scraped:</strong> Day {s.lastScrape} ({s.lastScrape === s.startDay ? 'Never' : 'Has scraped'})</div>
+              <div><strong>Available to Scrape:</strong> {formatNum(s.available)} OPHIR</div>
+              <div><strong>Last Scraped:</strong> Day {s.lastScrape || s.startDay} ({(s.lastScrape || s.startDay) === s.startDay ? 'Never' : 'Has scraped'})</div>
               <div><strong>Status:</strong> {currentDay >= s.unlockedDay ? 'Mature (full payout)' : 'Active'}</div>
             </div>
             <button className="end-btn" onClick={() => onEnd(idx, s.id)}>End Stake</button>
-            className="scrape-btn" 
-            onClick={() => onScrape(idx, s.id)}
-            disabled={s.available === '0'}
+            <button
+              className="scrape-btn"
+              onClick={() => onScrape(idx, s.id)}
+              disabled={s.available === '0'}
             >
-  Scrape Yield {s.available !== '0' && `(${formatNum(s.available)})`}
-</button>
+              Scrape Yield {s.available !== '0' && `(${formatNum(s.available)})`}
+            </button>
           </div>
         ))}
       </div>
