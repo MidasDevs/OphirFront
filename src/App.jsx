@@ -75,15 +75,15 @@ function App() {
   try {
     const bal = await contract.balanceOf(addr).catch(() => 0n);
     setBalance(ethers.formatUnits(bal || 0n, DECIMALS));
+
     const day = await contract.currentDay();
     setCurrentDay(Number(day));
+
     const count = await contract.countStakes(addr);
     const list = [];
     for (let i = 0; i < Number(count); i++) {
       const s = await contract.Stakes(addr, i);
-      // calculate accrued since last scrape
-      const lastScrape = Number(s.scrapeDay);
-      const interestDays = Number(day) - lastScrape;
+      const interestDays = Number(day) - Number(s.scrapeDay);
       let available = '0';
       if (interestDays > 0) {
         const accrued = await contract.calculateInterest(s.stakedPrinciple, interestDays);
@@ -97,7 +97,7 @@ function App() {
         unlockedDay: Number(s.startDay) + Number(s.stakedDays),
         scraped: ethers.formatUnits(s.scrapedInterest, DECIMALS),
         available,
-        lastScrape,
+        lastScrape: Number(s.scrapeDay),
       });
     }
     setStakes(list);
