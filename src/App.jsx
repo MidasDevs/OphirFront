@@ -1,4 +1,4 @@
-// src/App.jsx (fixed + full functions)
+// src/App.jsx (cleaned + working)
 import { useEffect, useState, useCallback } from 'react';
 import { createAppKit } from '@reown/appkit';
 import { EthersAdapter } from '@reown/appkit-adapter-ethers';
@@ -8,9 +8,9 @@ import Hero from './components/Hero';
 import BalanceCard from './components/BalanceCard';
 import StakeForm from './components/StakeForm';
 import StakesList from './components/StakesList';
+import GlobalsCard from './components/GlobalsCard';
 import './App.css';
 import { ABI, CONTRACT_ADDRESS, DECIMALS } from './abi/ophirAbi';
-import GlobalsCard from './components/GlobalsCard';
 
 const pulsechain = {
   id: 369,
@@ -37,6 +37,7 @@ const modal = createAppKit({
 });
 
 function App() {
+  const [activeTab, setActiveTab] = useState('stakes');
   const [account, setAccount] = useState(null);
   const [balance, setBalance] = useState('0');
   const [stakes, setStakes] = useState([]);
@@ -73,10 +74,8 @@ function App() {
     try {
       const bal = await contract.balanceOf(addr).catch(() => 0n);
       setBalance(ethers.formatUnits(bal || 0n, DECIMALS));
-
       const day = await contract.currentDay();
       setCurrentDay(Number(day));
-
       const count = await contract.countStakes(addr);
       const list = [];
       for (let i = 0; i < Number(count); i++) {
@@ -113,7 +112,6 @@ function App() {
 
   const connect = async () => { await modal.open(); updateConnection(); };
   const disconnect = async () => { await modal.disconnect(); updateConnection(); };
-  await updateConnection();
 
   const startStake = async (amount, days) => {
     if (!amount || !days) return;
@@ -164,8 +162,16 @@ function App() {
           </div>
           <BalanceCard balance={balance} />
           <StakeForm onStake={startStake} />
-          <StakesList stakes={stakes} currentDay={currentDay} onEnd={endStake} onScrape={scrapeStake} />
-		  <GlobalsCard />
+          <div className="tabs">
+            <button className={activeTab === 'stakes' ? 'active' : ''} onClick={() => setActiveTab('stakes')}>
+              Active Stakes
+            </button>
+            <button className={activeTab === 'globals' ? 'active' : ''} onClick={() => setActiveTab('globals')}>
+              Network Stats
+            </button>
+          </div>
+          {activeTab === 'stakes' && <StakesList stakes={stakes} currentDay={currentDay} onEnd={endStake} onScrape={scrapeStake} />}
+          {activeTab === 'globals' && <GlobalsCard />}
         </>
       )}
       <footer className="footer">

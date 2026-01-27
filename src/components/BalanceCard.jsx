@@ -1,10 +1,7 @@
-// src/components/BalanceCard.jsx
+// src/components/BalanceCard.jsx (8 decimals)
 import React from 'react';
 
-const formatNum = (num) => {
-  const n = Number(num);
-  return n.toLocaleString('en-US', { maximumFractionDigits: 8 });
-};
+const formatNum = (num) => Number(num).toLocaleString('en-US', { maximumFractionDigits: 8 });
 
 function BalanceCard({ balance }) {
   return (

@@ -1,4 +1,4 @@
-// src/components/GlobalsCard.jsx
+// src/components/GlobalsCard.jsx (keep 2 decimals for big stats)
 import { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { ABI, CONTRACT_ADDRESS, DECIMALS } from '../abi/ophirAbi';
