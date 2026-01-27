@@ -1,4 +1,4 @@
-// src/App.jsx (cleaned + working)
+// src/App.jsx (full corrected)
 import { useEffect, useState, useCallback } from 'react';
 import { createAppKit } from '@reown/appkit';
 import { EthersAdapter } from '@reown/appkit-adapter-ethers';
@@ -43,6 +43,7 @@ function App() {
   const [stakes, setStakes] = useState([]);
   const [currentDay, setCurrentDay] = useState(0);
   const [wrongChain, setWrongChain] = useState(false);
+  const [lastTx, setLastTx] = useState(null);
 
   const updateConnection = useCallback(async () => {
     const walletProvider = modal.getWalletProvider();
@@ -122,6 +123,7 @@ function App() {
     const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
     const tx = await contract.startStake(ethers.parseUnits(amount, DECIMALS), days);
     await tx.wait();
+    setLastTx(tx.hash);
     updateConnection();
   };
 
@@ -133,6 +135,7 @@ function App() {
     const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
     const tx = await contract.endStake(idx, id);
     await tx.wait();
+    setLastTx(tx.hash);
     updateConnection();
   };
 
@@ -144,6 +147,7 @@ function App() {
     const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, signer);
     const tx = await contract.scrapeStake(idx, id);
     await tx.wait();
+    setLastTx(tx.hash);
     updateConnection();
   };
 
@@ -166,12 +170,26 @@ function App() {
             <button className={activeTab === 'stakes' ? 'active' : ''} onClick={() => setActiveTab('stakes')}>
               Active Stakes
             </button>
+            <button className={activeTab === 'ended' ? 'active' : ''} onClick={() => setActiveTab('ended')}>
+              Ended Stakes
+            </button>
+            <button className={activeTab === 'history' ? 'active' : ''} onClick={() => setActiveTab('history')}>
+              Scrape History
+            </button>
             <button className={activeTab === 'globals' ? 'active' : ''} onClick={() => setActiveTab('globals')}>
               Network Stats
             </button>
           </div>
           {activeTab === 'stakes' && <StakesList stakes={stakes} currentDay={currentDay} onEnd={endStake} onScrape={scrapeStake} />}
+          {activeTab === 'ended' && <p>Ended stakes tracking coming soon</p>}
+          {activeTab === 'history' && <p>Scrape history tracking coming soon</p>}
           {activeTab === 'globals' && <GlobalsCard />}
+          {lastTx && (
+            <div className="tx-toast">
+              Success! <a href={`https://scan.pulsechain.com/tx/${lastTx}`} target="_blank" rel="noopener">View Tx</a>
+              <button onClick={() => setLastTx(null)}>×</button>
+            </div>
+          )}
         </>
       )}
       <footer className="footer">

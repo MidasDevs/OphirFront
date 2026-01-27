@@ -331,3 +331,19 @@ body {
 .tabs button.active {
   background: linear-gradient(90deg, #ff00aa, #9d00ff);
 }
+
+.tx-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #00d1b2;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  color: black;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .stakes-grid { grid-template-columns: 1fr; }
+}
